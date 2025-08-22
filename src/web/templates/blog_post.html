@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+
+{% block title %}{{ post.title }} - Tasksolver Pro{% endblock %}
+
+{% block content %}
+<article style="background: white; padding: 2rem; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); margin-bottom: 2rem;">
+    <header style="margin-bottom: 2rem; border-bottom: 1px solid #eee; padding-bottom: 1rem;">
+        <h1 style="color: #667eea; margin-bottom: 1rem;">{{ post.title }}</h1>
+        <div style="color: #888; font-size: 0.9rem; margin-bottom: 1rem;">
+            <span>By {{ post.author }}</span> •
+            <span>{{ post.created_at.strftime('%B %d, %Y') }}</span> •
+            <span>{{ post.views }} views</span> •
+            <span>{{ post.category.title().replace('-', ' ') }}</span>
+        </div>
+        <div class="tags">
+            {% for tag in post.tags %}
+            <span class="tag">{{ tag }}</span>
+            {% endfor %}
+        </div>
+    </header>
+    
+    <div style="line-height: 1.8; font-size: 1.1rem;">
+        {{ post.content|replace('\n\n', '</p><p>')|replace('\n', '<br>')|replace('**', '<strong>')|replace('**', '</strong>')|safe }}
+    </div>
+    
+    <footer style="margin-top: 2rem; padding-top: 1rem; border-top: 1px solid #eee;">
+        <div style="display: flex; gap: 1rem; align-items: center;">
+            <span style="color: #666;">Share this post:</span>
+            <a href="#" onclick="sharePost('{{ post.title }}')" class="btn btn-secondary" style="padding: 0.5rem 1rem; font-size: 0.9rem;">Share</a>
+            <a href="/blog" class="btn btn-secondary" style="padding: 0.5rem 1rem; font-size: 0.9rem;">← Back to Blog</a>
+        </div>
+    </footer>
+</article>
+
+{% if related_posts %}
+<section>
+    <h2 style="color: #667eea; margin-bottom: 1rem;">Related Posts</h2>
+    <div class="grid">
+        {% for related_post in related_posts %}
+        {% if related_post.id != post.id %}
+        <div class="card">
+            <h3><a href="/blog/{{ related_post.id }}" style="text-decoration: none; color: #667eea;">{{ related_post.title }}</a></h3>
+            <p style="color: #888; font-size: 0.9rem; margin-bottom: 1rem;">
+                {{ related_post.created_at.strftime('%B %d, %Y') }} • {{ related_post.views }} views
+            </p>
+            <p>{{ related_post.content[:150] }}...</p>
+            <div class="tags">
+                {% for tag in related_post.tags %}
+                <span class="tag">{{ tag }}</span>
+                {% endfor %}
+            </div>
+            <a href="/blog/{{ related_post.id }}" class="btn">Read More</a>
+        </div>
+        {% endif %}
+        {% endfor %}
+    </div>
+</section>
+{% endif %}
+
+<section style="margin-top: 3rem; text-align: center; padding: 2rem; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 10px; color: white;">
+    <h2 style="margin-bottom: 1rem;">Found This Helpful?</h2>
+    <p style="margin-bottom: 1.5rem;">Explore more wellness content and create your own digital products with our free tools.</p>
+    <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+        <a href="/blog" class="btn" style="background: rgba(255,255,255,0.2); border: 1px solid white;">More Blog Posts</a>
+        <a href="/generator" class="btn" style="background: rgba(255,255,255,0.2); border: 1px solid white;">Create Content</a>
+    </div>
+</section>
+
+<script>
+function sharePost(title) {
+    if (navigator.share) {
+        navigator.share({
+            title: title,
+            url: window.location.href
+        });
+    } else {
+        // Fallback: copy URL to clipboard
+        navigator.clipboard.writeText(window.location.href).then(() => {
+            alert('Link copied to clipboard!');
+        });
+    }
+}
+
+// Enhanced content formatting
+document.addEventListener('DOMContentLoaded', function() {
+    const content = document.querySelector('article div[style*="line-height"]');
+    if (content) {
+        // Convert markdown-style formatting
+        let html = content.innerHTML;
+        
+        // Convert headers
+        html = html.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+        html = html.replace(/^### (.*$)/gim, '<h3>$1</h3>');
+        html = html.replace(/^## (.*$)/gim, '<h2 style="color: #667eea; margin: 1.5rem 0 1rem 0;">$1</h2>');
+        html = html.replace(/^# (.*$)/gim, '<h1 style="color: #667eea; margin: 1.5rem 0 1rem 0;">$1</h1>');
+        
+        // Convert lists
+        html = html.replace(/^\- (.*$)/gim, '<li>$1</li>');
+        html = html.replace(/(<li>.*<\/li>)/s, '<ul style="margin: 1rem 0; padding-left: 2rem;">$1</ul>');
+        
+        content.innerHTML = html;
+    }
+});
+</script>
+{% endblock %}

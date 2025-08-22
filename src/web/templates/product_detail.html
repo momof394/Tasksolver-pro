@@ -1,0 +1,150 @@
+{% extends "base.html" %}
+
+{% block title %}{{ product.title }} - Tasksolver Pro{% endblock %}
+
+{% block content %}
+<div style="background: white; padding: 2rem; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); margin-bottom: 2rem;">
+    <header style="margin-bottom: 2rem; border-bottom: 1px solid #eee; padding-bottom: 1rem;">
+        <h1 style="color: #667eea; margin-bottom: 1rem;">{{ product.title }}</h1>
+        <div style="color: #888; font-size: 0.9rem; margin-bottom: 1rem;">
+            <span>{{ product.product_type.title() }}</span> •
+            <span>Created {{ product.created_at.strftime('%B %d, %Y') }}</span> •
+            <span>{{ product.download_count }} downloads</span> •
+            <span style="color: #28a745; font-weight: bold;">FREE</span>
+        </div>
+        <div class="tags">
+            {% for tag in product.tags %}
+            <span class="tag">{{ tag }}</span>
+            {% endfor %}
+        </div>
+    </header>
+    
+    <div style="margin-bottom: 2rem;">
+        <div style="display: flex; gap: 1rem; margin-bottom: 1rem; align-items: center;">
+            <button onclick="downloadProduct()" class="btn" style="background: #28a745;">📥 Download Free</button>
+            <button onclick="shareProduct('{{ product.title }}')" class="btn btn-secondary">🔗 Share</button>
+            <span style="color: #666; font-size: 0.9rem;">No registration required</span>
+        </div>
+        <p style="color: #666; font-size: 0.9rem;">
+            This {{ product.product_type }} is completely free to download and use. Share it with anyone who might benefit!
+        </p>
+    </div>
+    
+    <div style="background: #f8f9fa; padding: 1.5rem; border-radius: 8px; border-left: 4px solid #667eea;">
+        <h3 style="color: #667eea; margin-bottom: 1rem;">Content Preview</h3>
+        <div style="line-height: 1.8; font-size: 1rem; max-height: 400px; overflow-y: auto;">
+            {{ product.content|replace('\n\n', '</p><p>')|replace('\n', '<br>')|replace('**', '<strong>')|replace('**', '</strong>')|safe }}
+        </div>
+    </div>
+    
+    <div style="margin-top: 2rem; padding-top: 1rem; border-top: 1px solid #eee;">
+        <div style="display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;">
+            <a href="/products" class="btn btn-secondary">← Back to Products</a>
+            <a href="/generator" class="btn btn-secondary">Create Similar Product</a>
+        </div>
+    </div>
+</div>
+
+<section style="margin-top: 2rem;">
+    <h2 style="color: #667eea; margin-bottom: 1rem;">About This {{ product.product_type.title() }}</h2>
+    <div style="background: white; padding: 1.5rem; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+        <div class="grid">
+            <div>
+                <h4>What You'll Get:</h4>
+                <ul style="margin-left: 1.5rem; line-height: 1.6;">
+                    <li>Complete {{ product.product_type }} content</li>
+                    <li>Easy-to-read format</li>
+                    <li>Actionable tips and strategies</li>
+                    <li>Lifetime access (it's yours forever)</li>
+                </ul>
+            </div>
+            <div>
+                <h4>Perfect For:</h4>
+                <ul style="margin-left: 1.5rem; line-height: 1.6;">
+                    {% if 'wellness' in product.tags %}
+                    <li>Anyone interested in improving their wellness</li>
+                    {% endif %}
+                    {% if 'self-care' in product.tags %}
+                    <li>People looking to develop better self-care habits</li>
+                    {% endif %}
+                    {% if 'mental-health' in product.tags %}
+                    <li>Those seeking mental health support and strategies</li>
+                    {% endif %}
+                    {% if 'productivity' in product.tags %}
+                    <li>Individuals wanting to boost their productivity</li>
+                    {% endif %}
+                    <li>Anyone on a personal development journey</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section style="margin-top: 3rem; text-align: center; padding: 2rem; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 10px; color: white;">
+    <h2 style="margin-bottom: 1rem;">Enjoyed This Product?</h2>
+    <p style="margin-bottom: 1.5rem;">Check out our wellness blog for more tips and create your own digital products to help others.</p>
+    <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+        <a href="/blog" class="btn" style="background: rgba(255,255,255,0.2); border: 1px solid white;">Read Blog</a>
+        <a href="/generator" class="btn" style="background: rgba(255,255,255,0.2); border: 1px solid white;">Create Product</a>
+    </div>
+</section>
+
+<script>
+function downloadProduct() {
+    // Simulate download - in a real app, this would generate and download a file
+    const content = `{{ product.content|replace('\n', '\\n')|replace('"', '\\"') }}`;
+    const title = `{{ product.title }}`;
+    
+    // Create a blob with the content
+    const blob = new Blob([`${title}\n\n${content}`], { type: 'text/plain' });
+    const url = window.URL.createObjectURL(blob);
+    
+    // Create a temporary link and click it
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `${title.replace(/[^a-z0-9]/gi, '_').toLowerCase()}.txt`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    window.URL.revokeObjectURL(url);
+    
+    // Show success message
+    alert('Product downloaded successfully! Thank you for using our free platform.');
+}
+
+function shareProduct(title) {
+    if (navigator.share) {
+        navigator.share({
+            title: title,
+            text: `Check out this free ${title} from Tasksolver Pro!`,
+            url: window.location.href
+        });
+    } else {
+        // Fallback: copy URL to clipboard
+        navigator.clipboard.writeText(window.location.href).then(() => {
+            alert('Link copied to clipboard! Share it with anyone who might benefit.');
+        });
+    }
+}
+
+// Enhanced content formatting
+document.addEventListener('DOMContentLoaded', function() {
+    const content = document.querySelector('div[style*="line-height: 1.8"]');
+    if (content) {
+        // Convert markdown-style formatting
+        let html = content.innerHTML;
+        
+        // Convert headers
+        html = html.replace(/^### (.*$)/gim, '<h4 style="color: #667eea; margin: 1rem 0 0.5rem 0;">$1</h4>');
+        html = html.replace(/^## (.*$)/gim, '<h3 style="color: #667eea; margin: 1.5rem 0 1rem 0;">$1</h3>');
+        html = html.replace(/^# (.*$)/gim, '<h2 style="color: #667eea; margin: 1.5rem 0 1rem 0;">$1</h2>');
+        
+        // Convert lists
+        html = html.replace(/^\- (.*$)/gim, '<li>$1</li>');
+        html = html.replace(/(<li>.*<\/li>)/s, '<ul style="margin: 1rem 0; padding-left: 2rem;">$1</ul>');
+        
+        content.innerHTML = html;
+    }
+});
+</script>
+{% endblock %}

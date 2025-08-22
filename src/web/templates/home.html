@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="hero">
+    <h1>Free Digital Product Generator & Wellness Hub</h1>
+    <p>Transform your ideas into digital products and discover wellness tips that promote self-care, mental health, and personal growth. Completely free to use - no hidden fees!</p>
+    <a href="/generator" class="btn">Start Creating</a>
+    <a href="/blog" class="btn btn-secondary">Read Wellness Blog</a>
+</div>
+
+<section>
+    <h2 style="text-align: center; margin-bottom: 2rem; color: #667eea;">Featured Wellness Content</h2>
+    
+    {% if featured_posts %}
+    <div class="grid">
+        {% for post in featured_posts[:3] %}
+        <div class="card">
+            <h3>{{ post.title }}</h3>
+            <p>{{ post.content[:150] }}...</p>
+            <div class="tags">
+                {% for tag in post.tags %}
+                <span class="tag">{{ tag }}</span>
+                {% endfor %}
+            </div>
+            <a href="/blog/{{ post.id }}" class="btn">Read More</a>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+</section>
+
+{% if recent_products %}
+<section style="margin-top: 3rem;">
+    <h2 style="text-align: center; margin-bottom: 2rem; color: #667eea;">Recent Digital Products</h2>
+    <div class="grid">
+        {% for product in recent_products %}
+        <div class="card">
+            <h3>{{ product.title }}</h3>
+            <p>{{ product.content[:100] }}...</p>
+            <div class="tags">
+                {% for tag in product.tags %}
+                <span class="tag">{{ tag }}</span>
+                {% endfor %}
+            </div>
+            <p><strong>Type:</strong> {{ product.product_type.title() }}</p>
+            <p><strong>Downloads:</strong> {{ product.download_count }}</p>
+            <a href="/product/{{ product.id }}" class="btn">View Product</a>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+{% endif %}
+
+<section style="margin-top: 3rem; text-align: center; padding: 2rem; background: white; border-radius: 10px;">
+    <h2 style="color: #667eea; margin-bottom: 1rem;">How It Works</h2>
+    <div class="grid">
+        <div class="card">
+            <h3>1. Create Content</h3>
+            <p>Use our free generator to transform your text into professional digital products like guides, ebooks, and courses.</p>
+        </div>
+        <div class="card">
+            <h3>2. Learn & Grow</h3>
+            <p>Explore our wellness blog with tips on self-care, mental health, productivity, and personal development.</p>
+        </div>
+        <div class="card">
+            <h3>3. Share & Help</h3>
+            <p>All content is free to access and share. We believe in helping others grow without barriers or fees.</p>
+        </div>
+    </div>
+</section>
+
+<section style="margin-top: 3rem; text-align: center; padding: 2rem; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 10px; color: white;">
+    <h2 style="margin-bottom: 1rem;">Why Choose Our Platform?</h2>
+    <div class="grid">
+        <div style="text-align: left;">
+            <h3>🆓 Completely Free</h3>
+            <p>No subscription fees, no hidden charges, no premium tiers. Everything is free forever.</p>
+        </div>
+        <div style="text-align: left;">
+            <h3>🎯 Wellness Focus</h3>
+            <p>Dedicated to promoting mental health, self-care, and personal development.</p>
+        </div>
+        <div style="text-align: left;">
+            <h3>⚡ Instant Generation</h3>
+            <p>Create professional digital products from your text in seconds.</p>
+        </div>
+    </div>
+</section>
+{% endblock %}

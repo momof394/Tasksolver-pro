@@ -1,0 +1,122 @@
+{% extends "base.html" %}
+
+{% block title %}Digital Product Generator - Tasksolver Pro{% endblock %}
+
+{% block content %}
+<div class="hero">
+    <h1>Digital Product Generator</h1>
+    <p>Transform your text into professional digital products instantly. Create guides, ebooks, courses, and more - completely free!</p>
+</div>
+
+<div style="background: white; padding: 2rem; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+    <form id="generatorForm">
+        <div class="form-group">
+            <label for="text_input">Your Content:</label>
+            <textarea id="text_input" name="text_input" placeholder="Enter your content here. You can write about wellness tips, self-care practices, productivity methods, or any topic you'd like to turn into a digital product..." required></textarea>
+        </div>
+        
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+            <div class="form-group">
+                <label for="product_type">Product Type:</label>
+                <select id="product_type" name="product_type">
+                    <option value="guide">Guide</option>
+                    <option value="ebook">E-book</option>
+                    <option value="course">Course</option>
+                    <option value="worksheet">Worksheet</option>
+                    <option value="checklist">Checklist</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="template_name">Template (Optional):</label>
+                <select id="template_name" name="template_name">
+                    <option value="none">No Template</option>
+                    <option value="wellness_guide">Wellness Guide</option>
+                    <option value="self_care_ebook">Self-Care E-book</option>
+                    <option value="productivity_guide">Productivity Guide</option>
+                </select>
+            </div>
+        </div>
+        
+        <button type="submit" class="btn" style="width: 100%; margin-top: 1rem;">Generate Digital Product</button>
+    </form>
+    
+    <div id="result" style="margin-top: 2rem; display: none;"></div>
+</div>
+
+<section style="margin-top: 3rem;">
+    <h2 style="text-align: center; margin-bottom: 2rem; color: #667eea;">Template Features</h2>
+    <div class="grid">
+        <div class="card">
+            <h3>Wellness Guide Template</h3>
+            <p>Perfect for creating comprehensive wellness resources with structured sections for understanding, tips, and daily practices.</p>
+            <div class="tags">
+                <span class="tag">wellness</span>
+                <span class="tag">health</span>
+                <span class="tag">structured</span>
+            </div>
+        </div>
+        <div class="card">
+            <h3>Self-Care E-book Template</h3>
+            <p>Ideal for self-care content with sections covering physical, mental, emotional, and social self-care practices.</p>
+            <div class="tags">
+                <span class="tag">self-care</span>
+                <span class="tag">mental-health</span>
+                <span class="tag">comprehensive</span>
+            </div>
+        </div>
+        <div class="card">
+            <h3>Productivity Guide Template</h3>
+            <p>Great for productivity content with focus on goal-setting, time management, and building effective habits.</p>
+            <div class="tags">
+                <span class="tag">productivity</span>
+                <span class="tag">efficiency</span>
+                <span class="tag">habits</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+document.getElementById('generatorForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const formData = new FormData(this);
+    const resultDiv = document.getElementById('result');
+    
+    // Show loading state
+    resultDiv.innerHTML = '<div class="alert" style="background: #cce5ff; color: #004085; border: 1px solid #99d6ff;">Generating your digital product...</div>';
+    resultDiv.style.display = 'block';
+    
+    fetch('/generate', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            resultDiv.innerHTML = `
+                <div class="alert alert-success">
+                    <h3>Success!</h3>
+                    <p>${data.message}</p>
+                </div>
+                <div class="card">
+                    <h3>${data.product.title}</h3>
+                    <p><strong>Type:</strong> ${data.product.product_type}</p>
+                    <p><strong>Status:</strong> ${data.product.status}</p>
+                    <div class="tags">
+                        ${data.product.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+                    </div>
+                    <a href="/product/${data.product.id}" class="btn">View Product</a>
+                </div>
+            `;
+        } else {
+            resultDiv.innerHTML = `<div class="alert alert-error">Error: ${data.error}</div>`;
+        }
+    })
+    .catch(error => {
+        resultDiv.innerHTML = '<div class="alert alert-error">An error occurred while generating the product.</div>';
+    });
+});
+</script>
+{% endblock %}

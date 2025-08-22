@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+
+{% block title %}Wellness Blog - Tasksolver Pro{% endblock %}
+
+{% block content %}
+<div class="hero">
+    <h1>Wellness & Self-Care Blog</h1>
+    <p>Discover tips, insights, and guidance for mental health, self-care, productivity, and personal growth. All content is free and designed to help you thrive.</p>
+</div>
+
+<div style="display: flex; gap: 2rem; margin-bottom: 2rem; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 300px;">
+        <form method="GET" style="display: flex; gap: 1rem;">
+            <input type="text" name="search" placeholder="Search blog posts..." value="{{ search_query }}" style="flex: 1; padding: 0.75rem; border: 1px solid #ddd; border-radius: 5px;">
+            <button type="submit" class="btn">Search</button>
+        </form>
+    </div>
+    
+    <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+        <a href="/blog" class="btn {% if not current_category %}btn-primary{% else %}btn-secondary{% endif %}">All</a>
+        {% for category in categories %}
+        <a href="/blog?category={{ category }}" class="btn {% if current_category == category %}btn-primary{% else %}btn-secondary{% endif %}">{{ category.title().replace('-', ' ') }}</a>
+        {% endfor %}
+    </div>
+</div>
+
+{% if search_query %}
+<p style="margin-bottom: 1rem; color: #666;">Search results for "{{ search_query }}" ({{ posts|length }} posts found)</p>
+{% elif current_category %}
+<p style="margin-bottom: 1rem; color: #666;">Posts in category: {{ current_category.title().replace('-', ' ') }} ({{ posts|length }} posts)</p>
+{% endif %}
+
+{% if posts %}
+<div class="grid">
+    {% for post in posts %}
+    <article class="card">
+        <h3><a href="/blog/{{ post.id }}" style="text-decoration: none; color: #667eea;">{{ post.title }}</a></h3>
+        <p style="color: #888; font-size: 0.9rem; margin-bottom: 1rem;">
+            By {{ post.author }} • {{ post.created_at.strftime('%B %d, %Y') }} • {{ post.views }} views
+        </p>
+        <p>{{ post.content[:200] }}...</p>
+        <div class="tags">
+            {% for tag in post.tags %}
+            <span class="tag">{{ tag }}</span>
+            {% endfor %}
+        </div>
+        <a href="/blog/{{ post.id }}" class="btn">Read More</a>
+    </article>
+    {% endfor %}
+</div>
+{% else %}
+<div style="text-align: center; padding: 3rem; background: white; border-radius: 10px;">
+    <h3>No posts found</h3>
+    <p>{% if search_query %}Try adjusting your search terms.{% else %}No posts available in this category.{% endif %}</p>
+</div>
+{% endif %}
+
+<section style="margin-top: 3rem; text-align: center; padding: 2rem; background: white; border-radius: 10px;">
+    <h2 style="color: #667eea; margin-bottom: 1rem;">Popular Topics</h2>
+    <div class="grid">
+        <div class="card">
+            <h3>🧘 Mental Health</h3>
+            <p>Tips for managing stress, anxiety, and maintaining emotional well-being in daily life.</p>
+            <a href="/blog?category=mental-health" class="btn">Explore</a>
+        </div>
+        <div class="card">
+            <h3>💆 Self-Care</h3>
+            <p>Practical self-care strategies that go beyond surface-level activities to promote true wellness.</p>
+            <a href="/blog?category=self-care" class="btn">Explore</a>
+        </div>
+        <div class="card">
+            <h3>⚡ Productivity</h3>
+            <p>Balanced approaches to productivity that prioritize well-being alongside achievement.</p>
+            <a href="/blog?category=productivity" class="btn">Explore</a>
+        </div>
+        <div class="card">
+            <h3>🌱 Wellness</h3>
+            <p>Holistic wellness tips covering physical, mental, and emotional health for a balanced life.</p>
+            <a href="/blog?category=wellness" class="btn">Explore</a>
+        </div>
+    </div>
+</section>
+{% endblock %}

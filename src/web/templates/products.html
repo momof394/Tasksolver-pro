@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block title %}Digital Products - Tasksolver Pro{% endblock %}
+
+{% block content %}
+<div class="hero">
+    <h1>Free Digital Products</h1>
+    <p>Browse our collection of digital products created by our community. All products are free to access and designed to support your wellness journey.</p>
+    <a href="/generator" class="btn">Create Your Own</a>
+</div>
+
+{% if products %}
+<div style="margin-bottom: 2rem; text-align: center;">
+    <p style="color: #666;">{{ products|length }} free digital products available</p>
+</div>
+
+<div class="grid">
+    {% for product in products %}
+    <div class="card">
+        <h3><a href="/product/{{ product.id }}" style="text-decoration: none; color: #667eea;">{{ product.title }}</a></h3>
+        <p style="color: #888; font-size: 0.9rem; margin-bottom: 1rem;">
+            {{ product.product_type.title() }} • {{ product.created_at.strftime('%B %d, %Y') }} • {{ product.download_count }} downloads
+        </p>
+        <p>{{ product.content[:200] }}...</p>
+        <div class="tags">
+            {% for tag in product.tags %}
+            <span class="tag">{{ tag }}</span>
+            {% endfor %}
+        </div>
+        <div style="display: flex; gap: 1rem; margin-top: 1rem;">
+            <a href="/product/{{ product.id }}" class="btn">View Product</a>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<div style="text-align: center; padding: 3rem; background: white; border-radius: 10px;">
+    <h3>No products available yet</h3>
+    <p>Be the first to create a digital product!</p>
+    <a href="/generator" class="btn">Create First Product</a>
+</div>
+{% endif %}
+
+<section style="margin-top: 3rem; text-align: center; padding: 2rem; background: white; border-radius: 10px;">
+    <h2 style="color: #667eea; margin-bottom: 1rem;">Product Types</h2>
+    <div class="grid">
+        <div class="card">
+            <h3>📖 Guides</h3>
+            <p>Comprehensive guides on wellness topics, self-care practices, and personal development strategies.</p>
+        </div>
+        <div class="card">
+            <h3>📚 E-books</h3>
+            <p>In-depth e-books covering mental health, productivity, mindfulness, and holistic wellness approaches.</p>
+        </div>
+        <div class="card">
+            <h3>🎓 Courses</h3>
+            <p>Structured learning materials and courses for developing healthy habits and coping strategies.</p>
+        </div>
+        <div class="card">
+            <h3>📝 Worksheets</h3>
+            <p>Interactive worksheets for self-reflection, goal setting, and tracking personal growth progress.</p>
+        </div>
+    </div>
+</section>
+
+<section style="margin-top: 3rem; text-align: center; padding: 2rem; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 10px; color: white;">
+    <h2 style="margin-bottom: 1rem;">Create Your Own Digital Product</h2>
+    <p style="margin-bottom: 1.5rem; font-size: 1.1rem;">
+        Have knowledge to share? Transform your expertise into a digital product that can help others on their wellness journey.
+    </p>
+    <a href="/generator" class="btn" style="background: rgba(255,255,255,0.2); border: 1px solid white;">Start Creating</a>
+</section>
+{% endblock %}
