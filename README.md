@@ -11,7 +11,7 @@ Tasksolver-pro aims to be the go-to solution for organizations looking to:
 - Optimize workflow processes
 
 ## Organization Structure
-
+'
 This project is organized into the following key areas:
 
 ### Core Components
