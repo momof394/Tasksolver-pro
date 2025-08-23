@@ -30,9 +30,52 @@ Tasksolver-pro/
 └── examples/       # Usage examples
 ```
 
+## Current Status
+
+🚀 **Development Stage**: Alpha - Core functionality implemented and tested
+
+**Quick Progress Check**:
+```bash
+# View quick progress summary
+python3 scripts/quick_progress.py
+
+# Generate detailed progress report
+python3 scripts/progress_report.py
+
+# Open visual progress dashboard
+python3 scripts/quick_progress.py --web
+```
+
+**What's Working Now**:
+- ✅ Core task management (create, assign, complete tasks)
+- ✅ Task filtering by status and user
+- ✅ Unit testing framework (6/6 tests passing)
+- ✅ Basic usage examples
+- ✅ Comprehensive documentation
+- ✅ Automated setup and progress reporting
+
 ## Getting Started
 
-This project is currently in development. Check back soon for installation and usage instructions.
+### Quick Setup
+```bash
+# Run the setup script
+./scripts/setup.sh
+
+# Try the basic example
+python3 examples/basic-usage/main.py
+
+# Check current progress
+python3 scripts/quick_progress.py
+```
+
+### Next Development Phase
+The project is ready for the next development phase focusing on:
+1. Web user interface development
+2. REST API implementation
+3. Database integration
+4. User authentication system
+
+For detailed development roadmap, see the [progress dashboard](docs/progress-dashboard.html).
 
 ## Contributing
 
