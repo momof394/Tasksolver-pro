@@ -11,8 +11,13 @@ Tasksolver-pro aims to be the go-to solution for organizations looking to:
 - Optimize workflow processes
 
 ## Organization Structure
-'
+
 This project is organized into the following key areas:
+
+### Leadership & Partnerships
+- **thecreator9419 Organization**: Lead development organization managing the project
+- **Google Collaboration**: Strategic partnership for technical guidance and infrastructure support
+- See [Google Collaboration Framework](docs/google-collaboration.md) for details
 
 ### Core Components
 - **Task Management**: Create, assign, and track tasks
@@ -80,6 +85,12 @@ For detailed development roadmap, see the [progress dashboard](docs/progress-das
 ## Contributing
 
 We welcome contributions from the community! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines on how to get involved.
+
+### Google Collaboration
+The thecreator9419 organization is actively collaborating with Google on this project. For information about this partnership:
+- [Google Collaboration Framework](docs/google-collaboration.md)
+- [Next Steps for Collaboration](docs/next-steps-google-collaboration.md)
+- [Updated Team Structure](docs/team-structure.md)
 
 ## License
 

@@ -36,6 +36,13 @@ Thank you for your interest in contributing to Tasksolver-pro! This document pro
 - Use clear and concise language
 - Provide constructive feedback
 
+### Google Collaboration
+For contributors working on Google-related integrations or collaborating with Google team members:
+- Review the [Google Collaboration Framework](docs/google-collaboration.md)
+- Tag Google team members in relevant issues and pull requests
+- Follow Google's coding standards for Google Cloud integrations
+- Ensure proper documentation for Google-specific features
+
 ### Project Structure
 - Follow the established folder structure
 - Place files in appropriate directories

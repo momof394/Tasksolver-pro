@@ -8,6 +8,7 @@ This document outlines the organizational structure for the Tasksolver-pro proje
 - **Project Owner**: Overall project vision and strategic direction
 - **Technical Lead**: Technical architecture and implementation oversight
 - **Community Manager**: Community engagement and contributor coordination
+- **Partnership Coordinator**: Manages external partnerships (Google collaboration)
 
 ### Development Teams
 
@@ -26,6 +27,11 @@ This document outlines the organizational structure for the Tasksolver-pro proje
 
 ### Specialized Roles
 
+#### Google Collaboration Team
+- **Google Integration Lead**: Manages Google Cloud Platform integrations
+- **Cross-org Technical Reviewer**: Reviews code changes across organizations
+- **Google Partnership Liaison**: Facilitates communication with Google teams
+
 #### Documentation Team
 - **Technical Writers**: Documentation creation and maintenance
 - **Content Reviewers**: Documentation quality and accuracy
@@ -37,9 +43,10 @@ This document outlines the organizational structure for the Tasksolver-pro proje
 ## Collaboration Structure
 
 ### Decision Making
-1. **Technical Decisions**: Technical Lead with input from development teams
-2. **Product Decisions**: Project Owner with stakeholder input
+1. **Technical Decisions**: Technical Lead with input from development teams and Google technical reviewers
+2. **Product Decisions**: Project Owner with stakeholder input and Google partnership team
 3. **Community Decisions**: Community Manager with contributor feedback
+4. **Partnership Decisions**: Partnership Coordinator with Google liaison team
 
 ### Communication Channels
 - **Team Meetings**: Regular sync meetings for each team
@@ -48,13 +55,15 @@ This document outlines the organizational structure for the Tasksolver-pro proje
 
 ### Responsibilities Matrix
 
-| Role | Code Review | Documentation | Testing | Deployment | Community |
-|------|-------------|---------------|---------|------------|-----------|
-| Technical Lead | ✅ | ✅ | ✅ | ✅ | ⚪ |
-| Developers | ✅ | ✅ | ✅ | ⚪ | ⚪ |
-| QA Engineers | ⚪ | ✅ | ✅ | ⚪ | ⚪ |
-| DevOps | ⚪ | ✅ | ⚪ | ✅ | ⚪ |
-| Community Manager | ⚪ | ✅ | ⚪ | ⚪ | ✅ |
+| Role | Code Review | Documentation | Testing | Deployment | Community | Google Collaboration |
+|------|-------------|---------------|---------|------------|-----------|---------------------|
+| Technical Lead | ✅ | ✅ | ✅ | ✅ | ⚪ | ✅ |
+| Developers | ✅ | ✅ | ✅ | ⚪ | ⚪ | ⚪ |
+| QA Engineers | ⚪ | ✅ | ✅ | ⚪ | ⚪ | ⚪ |
+| DevOps | ⚪ | ✅ | ⚪ | ✅ | ⚪ | ✅ |
+| Community Manager | ⚪ | ✅ | ⚪ | ⚪ | ✅ | ⚪ |
+| Partnership Coordinator | ⚪ | ✅ | ⚪ | ⚪ | ⚪ | ✅ |
+| Google Integration Lead | ✅ | ✅ | ✅ | ✅ | ⚪ | ✅ |
 
 **Legend**: ✅ Primary responsibility, ⚪ Supporting role
 

@@ -19,6 +19,10 @@ Welcome to the Tasksolver-pro documentation! This directory contains all the doc
 - [Workflows](workflows.md) - Development and collaboration workflows
 - [Best Practices](best-practices.md) - Coding and collaboration standards
 
+### Partnership and Collaboration
+- [Google Collaboration Framework](google-collaboration.md) - Google partnership guidelines
+- [Next Steps for Google Collaboration](next-steps-google-collaboration.md) - Action plan and checklist
+
 ## Quick Links
 
 - [Main README](../README.md)
